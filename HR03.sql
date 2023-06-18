@@ -66,7 +66,122 @@ FROM dual;
 SELECT MOD(163,2)
 FROM dual;
 
-SELECT SESSIONTIMEZONE,Current_DATE FROM DUAL
+SELECT SESSIONTIMEZONE,Current_DATE FROM DUAL;
+
+SELECT 'principal',substr('principal',length('principal')-6,length('principal')-7)
+    FROM dual;
+    
+--18.06.23  SYSDATE function
+
+SELECT ROUND((MONTHS_BETWEEN(SYSDATE,'01-JAN-1997'))/12,0)
+    FROM dual; 
+
+SELECT ROUND((SYSDATE-to_date('01-JAN-97','DD-MM-YYYY'))/365,0)
+    FROM dual;
+
+SELECT (SYSDATE-to_date('01-JAN-1997','DD-MM-YYYY'))/365
+    FROM dual;
+
+SELECT ADD_MONTHS(SYSDATE,-10) FROM dual;
+SELECT ROUND(SYSDATE,'MONTH') FROM dual;
+SELECT TRUNC(SYSDATE,'Month') FROM dual;
+SELECT ROUND(to_date('01-JAN-1964','DD-MM-YYYY'),'YEAR') FROM dual;
+SELECT TRUNC(to_date('01-JAN-1964','DD-MM-YYYY'),'YEAR') FROM dual;
+
+SELECT NEXT_DAY (SYSDATE,'Friday') FROM dual;
+    
+SELECT employee_id, TO_CHAR(hire_date,'month/yyyy') FROM employees;
+
+SELECT last_name, 
+    TO_CHAR(hire_date,
+                'fmDdspth "of" Month fmHH:MI:SS AM') "HIRE DATE"
+                    FROM employees;
+    
+SELECT last_name, TO_CHAR(hire_date,'DD-MON-YYYY')
+    FROM employees
+        WHERE hire_date< TO_DATE('18-Jun-23','DD-Mon-RR');
+
+SELECT last_name,phone_number,
+    FROM employees
+        WHERE phone_number IS NULL;
+SELECT last_name, commission_pct, NVL(phone_number,'9') 
+    FROM employees;
+
+SELECT last_name,salary, NULLIF(last_name,last_name)
+    FROM employees;
+SELECT last_name, salary, commission_pct,
+    COALESCE((salary+(commission_pct*salary)),salary+2000) "New salary"
+        FROM employees;
+
+SELECT last_name,job_id,salary,
+    CASE job_id WHEN 'IT_PROG' THEN 1.10*salary
+                WHEN 'ST_CLERK' THEN 1.10*salary
+                WHEN 'SA_REP' THEN 1.10*salary
+    ELSE salary END "REVISED SALARy"
+FROM employees;    
+
+SELECT last_name,job_id,salary,
+    DECODE( job_id,'IT_PROG', 1.10*salary,
+                'ST_CLERK', 1.10*salary,
+                'SA_REP', 1.10*salary,
+    salary)revised_salary
+FROM employees;  
+
+SELECT first_name,length(first_name)
+    FROM employees
+        WHERE length(first_name)= (SELECT (max(length(first_name)))
+            FROM employees);
+SELECT department_id,job_id, SUM(salary)
+    FROM employees
+        GROUP BY department_id,job_id;
+
+SELECT department_id,job_id, SUM(salary)
+    FROM employees
+        GROUP BY job_id,department_id
+            Order by department_id;
+
+SELECT department_id,job_id, SUM(salary)
+    FROM employees
+        WHERE department_id > 40            
+            GROUP BY job_id,department_id
+                ORDER by department_id;
+                
+SELECT department_id, MAX(salary)
+    FROM employees
+        GROUP BY department_id
+            HAVING MAX(salary)>10000
+                ORDER BY 2;
+                
+SELECT job_id,SUM(salary) PAYROLL
+    FROM employees
+        WHERE job_id NOT LIKE '%REP%'
+            GROUP BY job_id
+                HAVING SUM(salary)>13000
+                    ORDER BY SUM(salary);
+
+SELECT last_name,employee_id, job_id,MAX(salary) PAYROLL
+    FROM employees
+        WHERE salary = (SELECT MAX(salary)FROM employees)
+                        
+            GROUP BY job_id,last_name,employee_id
+                
+                    ORDER BY MAX(salary) DESC;                   
+
+--END of 18.06.23{GROUP BY function}
+
+
+
+
+
+    
+    
+    
+
+    
+    
+    
+    
+    
 
 
 
