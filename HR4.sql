@@ -43,6 +43,8 @@ SELECT employee_id, city, department_name, e.department_id
 -- END of 19.06.23
 SELECT TO_CHAR(1680,'$99G999D99') FROM dual;
 SELECT ROUND(154.23,-2) FROM dual;
+SELECT 188||null from dual;
+SELECT CONCAT('188',null) from dual;
 
 
 
