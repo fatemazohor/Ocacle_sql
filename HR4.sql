@@ -44,7 +44,26 @@ SELECT employee_id, city, department_name, e.department_id
 SELECT TO_CHAR(1680,'$99G999D99') FROM dual;
 SELECT ROUND(154.23,-2) FROM dual;
 SELECT 188||null from dual;
+
+SELECT TO_DATE('01January2023','fxDDTH"of"Month yyyy')
+    FROM dual;
 SELECT CONCAT('188',null) from dual;
+
+SELECT employee_id,city,department_id
+    FROM employees 
+        JOIN departments 
+            USING (department_id)
+                JOIN locations
+                    USING (location_id);
+
+
+
+
+
+
+
+
+
 
 
 
