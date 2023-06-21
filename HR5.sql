@@ -187,7 +187,104 @@ SELECT e.first_name, e.last_name, e.employee_id, e.job_id,l.city
                 ON(e.department_id=d.department_id)
                 JOIN locations l
                 ON (d.location_id=l.location_id)
-        WHERE l.city='Toronto';        
+        WHERE l.city='Toronto';   
+        
+SELECT to_char(SYSDATE,'ddth') FROM dual;
+SELECT to_date('17 Jun 2023','dd-MON-YYYY') FROM dual;
+SELECT UNIQUE(department_id),first_name,last_name FROM employees
+    WHERE last_name='Smith';
+
+--21.06.23
+SELECT last_name, NVL(to_char(commission_pct),'No commission')
+    FROM employees;
+SELECT last_name,job_id, 
+    CASE job_id 
+        WHEN 'AD_PRES' THEN 'A'
+        WHEN 'ST_MAN' THEN 'B'
+        WHEN 'IT_PROG' THEN 'C'
+        WHEN 'SA_REP' THEN 'D'
+        WHEN 'ST_CLERK' THEN 'E'
+        ELSE '0' 
+        END grade
+FROM employees;
+-- BOOK Practices for ch5-pa6
+SELECT last_name,job_id,
+    DECODE (job_id, 'AD_PRES' , 'A',
+                    'ST_MAN'  , 'B',
+                    'IT_PROG' , 'C',
+                    'SA_REP'  , 'D',
+                    'ST_CLERK', 'E',
+                        '0') grade
+FROM employees;                       
+-- BOOK Practices for ch5-pa8
+SELECT job_id,
+    (CASE 
+        WHEN job_id='AD_PRES' THEN  'A'
+        WHEN job_id='ST_MAN' THEN   'B'
+        WHEN job_id='IT_PROG' THEN  'C'
+        WHEN job_id='SA_REP' THEN   'D'
+        WHEN job_id='ST_CLERK' THEN 'E'
+        ELSE '0'
+        END)grade
+FROM employees;
+-- BOOK Practices for ch5-pa7
+SELECT job_id, MAX(salary) Maximum,MIN(salary) minimum, SUM(salary) sum, AVG(salary) average
+    FROM employees
+    GROUP BY job_id;
+-- BOOK Practices for ch6-pa3,n-4
+SELECT job_id, COUNT(*)
+    FROM employees
+        GROUP BY job_id;
+SELECT job_id,COUNT(*)
+    FROM employees
+    WHERE job_id= '&job_title'
+    GROUP BY job_id;-- BOOK Practices for ch6-pa4,n-6
+
+SELECT COUNT(DISTINCT manager_id)"Number of Manager"
+FROM employees;-- BOOK Practices for ch6-pa4,n-7
+
+SELECT (MAX(salary)-MIN(salary))Difference
+    FROM employees;-- BOOK Practices for ch6-pa4,n-8
+
+SELECT manager_id, MIN(salary)
+    FROM employees
+        WHERE manager_id IS NOT NULL
+        GROUP BY manager_id
+            HAVING min(salary)>6000
+            ORDER BY MIN(salary) desc; 
+--BOOK Practices for ch6-pa4,n-9
+SELECT COUNT(*),
+    SUM(DECODE(TO_CHAR(hire_date, 'YYYY'),2005,1,0))"2005",
+    SUM(DECODE(TO_CHAR(hire_date, 'YYYY'),2006,1,0))"2006",
+    SUM(DECODE(TO_CHAR(hire_date, 'YYYY'),2007,1,0))"2007",
+    SUM(DECODE(TO_CHAR(hire_date, 'YYYY'),2008,1,0))"2008"
+FROM employees;
+
+SELECT count(*),
+    SUM(CASE(TO_CHAR(hire_date, 'YYYY')WHEN '2005' THEN 1))"2005",
+    SUM(CASE(TO_CHAR(hire_date, 'YYYY')WHEN '2006' THEN 1))"2006",
+    SUM(CASE(TO_CHAR(hire_date, 'YYYY')WHEN '2007' THEN 1))"2007",
+    SUM(CASE(TO_CHAR(hire_date, 'YYYY')WHEN '2008' THEN 1))"2008"
+FROM employees;
+--don't run
+ 
+SELECT count(*),
+    SUM(CASE  WHEN hire_date=2005 THEN 1)"2005",
+    SUM(CASE WHEN hire_date=2006 THEN 1)"2006",
+   SUM(CASE WHEN hire_date=2007 THEN 1)"2007",
+    SUM(CASE WHEN hire_date=2008 THEN 1)"2008"
+FROM employees;   
+--don't run
+
+
+
+
+
+
+
+
+   
+   
 
 
 
