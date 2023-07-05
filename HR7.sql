@@ -71,12 +71,35 @@ SELECT employee_id, last_name, salary,hire_date
   FROM employees
 WHERE last_name LIKE '%king%';
 
+create table emp_1277607(
+    eid int primary key,
+    ename VARCHAR2(30),
+    phone_number NUMBER(15),
+    address varchar2(50)
+);
+
+insert into emp_1277607
+values(1,'ara',0125878936,'Dhaka');
+
+select * from emp_1277607;
 
 
 
+create table emp_1277606(
+    eid int primary key,
+    ename VARCHAR2(30),
+    phone_number VARCHAR2(15),
+    address varchar2(50)
+);
+
+insert into emp_1277606
+values(1,'ara','0125878936','Dhaka');
+
+insert into emp_1277606
+values(2,'Rara','+880125878936','Dhaka');
 
 
-
+select * from emp_1277606;
 
 
 
