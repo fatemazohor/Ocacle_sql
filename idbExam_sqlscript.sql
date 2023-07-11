@@ -6,7 +6,7 @@ SELECT (first_name||' '||last_name) AS ename, job_id, (salary+salary*0.3) AS sal
 	FROM hr.employees;
 --5
 
---Displays all employees' ename and job_title and salary where salary is salary and 30% bonus.
+--5.1Displays all employees' ename and job_title and salary where salary is salary and 30% bonus.
 
 SELECT (first_name||' '||last_name) AS ename, job_title, (salary+salary*0.3) AS salary  
 	FROM hr.employees e JOIN jobs j 
