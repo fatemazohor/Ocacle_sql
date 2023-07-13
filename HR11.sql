@@ -59,3 +59,7 @@ FROM loc;
 describe departments;
 
 SELECT * from user_constraints;
+
+select employee_id, first_name
+    from employees e 
+    where exists (select null from employees where manager_id = e.employee_id);
